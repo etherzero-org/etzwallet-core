@@ -232,11 +232,11 @@ console.log (result)
 static struct BREthereumTokenRecord tokens[] = {
     {
         // BRD first... so we can find it.
-        "0x558ec3152e2eb2174905cd19aea4e34a23de9ad6",
-        "BRD",
-        "BRD Token",
+        "0x86d105d5fa67f3eef986f75b7e63c6664f88319a",
+        "BO",
+        "BO Token",
         "",
-        18,
+        8,
         "#ff5193",
         "#f9a43a",
         {TOKEN_BRD_DEFAULT_GAS_LIMIT},

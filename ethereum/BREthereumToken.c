@@ -234,7 +234,7 @@ static struct BREthereumTokenRecord tokens[] = {
         // BRD first... so we can find it.
         "0x86d105d5fa67f3eef986f75b7e63c6664f88319a",
         "BO",
-        "BO Token",
+        "BlockOptions",
         "",
         8,
         "#ff5193",
@@ -262,6 +262,42 @@ static struct BREthereumTokenRecord tokens[] = {
         1
     },
 #endif // defined (BITCOIN_DEBUG)
+    {
+        "0x01d5ba5698e62983866e4beb9c5485fa5634fa69",
+        "FANS",
+        "FansToken",
+        "",
+        18,
+        "#bfbfbf",
+        "#bfbfbf",
+        { TOKEN_BRD_DEFAULT_GAS_LIMIT },
+        { { { .u64 = {TOKEN_BRD_DEFAULT_GAS_PRICE_IN_WEI_UINT64, 0, 0, 0}}}},
+        1
+    },
+    {
+        "0x9d3cda9140657a8e8f75988828fb3c90d395f2fd",
+        "EASY",
+        "Easy",
+        "",
+        18,
+        "#f15a22",
+        "#f15a22",
+        { TOKEN_BRD_DEFAULT_GAS_LIMIT },
+        { { { .u64 = {TOKEN_BRD_DEFAULT_GAS_PRICE_IN_WEI_UINT64, 0, 0, 0}}}},
+        1
+    },
+    {
+        "0xa602f2915c1da2042474553a36dff41b8479b4a7",
+        "MSM",
+        "MSM",
+        "",
+        8,
+        "#3effff",
+        "#3effff",
+        { TOKEN_BRD_DEFAULT_GAS_LIMIT },
+        { { { .u64 = {TOKEN_BRD_DEFAULT_GAS_PRICE_IN_WEI_UINT64, 0, 0, 0}}}},
+        1
+    },
 
     {
         "0xAf30D2a7E90d7DC361c8C4585e9BB7D2F6f15bc7",

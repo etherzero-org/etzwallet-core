@@ -268,8 +268,8 @@ static struct BREthereumTokenRecord tokens[] = {
         "FansToken",
         "",
         18,
-        "#bfbfbf",
-        "#bfbfbf",
+        "#ed1868",
+        "#ed2249",
         { TOKEN_BRD_DEFAULT_GAS_LIMIT },
         { { { .u64 = {TOKEN_BRD_DEFAULT_GAS_PRICE_IN_WEI_UINT64, 0, 0, 0}}}},
         1
@@ -280,8 +280,8 @@ static struct BREthereumTokenRecord tokens[] = {
         "Easy",
         "",
         18,
-        "#f15a22",
-        "#f15a22",
+        "#343434",
+        "#242424",
         { TOKEN_BRD_DEFAULT_GAS_LIMIT },
         { { { .u64 = {TOKEN_BRD_DEFAULT_GAS_PRICE_IN_WEI_UINT64, 0, 0, 0}}}},
         1
@@ -292,8 +292,8 @@ static struct BREthereumTokenRecord tokens[] = {
         "MSM",
         "",
         8,
-        "#3effff",
-        "#3effff",
+        "#103f68",
+        "#103568",
         { TOKEN_BRD_DEFAULT_GAS_LIMIT },
         { { { .u64 = {TOKEN_BRD_DEFAULT_GAS_PRICE_IN_WEI_UINT64, 0, 0, 0}}}},
         1

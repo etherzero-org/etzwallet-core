@@ -63,6 +63,9 @@ eventGetSelector (BREthereumContractEvent event);
  */
 extern const char *
 contractEncode (BREthereumContract contract, BREthereumContractFunction function, ...);
+    
+extern const char *
+etherEncode (const char *data, ...);
 
 /**
  * Return the function for `encodeing` or NULL.

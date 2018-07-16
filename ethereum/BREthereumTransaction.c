@@ -36,7 +36,7 @@
 
 // Forward Declarations
 static void
-provideData (BREthereumTransaction transaction);
+provideData (BREthereumTransaction transaction,const char *data);
 
 static void
 provideGasEstimate (BREthereumTransaction transaction);
@@ -169,7 +169,8 @@ transactionCreate(BREthereumAddress sourceAddress,
                   BREthereumAmount amount,
                   BREthereumGasPrice gasPrice,
                   BREthereumGas gasLimit,
-                  uint64_t nonce) {
+                  uint64_t nonce,
+                  const char *data) {
     BREthereumTransaction transaction = calloc (1, sizeof (struct BREthereumTransactionRecord));
 
     transactionStateCreated(&transaction->state);
@@ -182,7 +183,7 @@ transactionCreate(BREthereumAddress sourceAddress,
     transaction->chainId = 0;
     transaction->hash = hashCreateEmpty();
 
-    provideData(transaction);
+    provideData(transaction,data); //传入data值的最终函数
     provideGasEstimate(transaction);
 
     return transaction;
@@ -286,11 +287,12 @@ transactionGetData (BREthereumTransaction transaction) {
 }
 
 static void
-provideData (BREthereumTransaction transaction) {
+provideData (BREthereumTransaction transaction,const char *data) {
     if (NULL == transaction->data) {
         switch (amountGetType (transaction->amount)) {
             case AMOUNT_ETHER:
-                transaction->data = "";
+                // string ss1(data);
+            transaction->data = (char *) etherEncode(data);
                 break;
             case AMOUNT_TOKEN: {
                 UInt256 value = amountGetTokenQuantity(transaction->amount).valueAsInteger;

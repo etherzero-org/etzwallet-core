@@ -407,6 +407,22 @@ contractEncode (BREthereumContract contract, BREthereumContractFunction function
     return encoding;
 }
 
+/**
+ Data值加工处理
+ */
+extern const char *
+etherEncode (const char *data, ...) {
+    int n;
+    char * buffer;
+    buffer = (char*)malloc(strlen(data)+1);
+    
+    for(n=0; n<strlen(data); n++)
+    buffer[n] = data[n];
+    buffer[strlen(data)]='\0';
+    
+    return buffer;
+}
+
 //
 // Support
 //

@@ -176,14 +176,15 @@ ethereumWalletEstimateTransactionFee(BREthereumLightNode node,
     BREthereumWallet wallet = lightNodeLookupWallet(node, wid);
     return walletEstimateTransactionFee(wallet, amount, overflow);
 }
-
+//创建交易时传入的函数
 extern BREthereumTransactionId
 ethereumWalletCreateTransaction(BREthereumLightNode node,
                                 BREthereumWalletId wid,
                                 const char *recvAddress,
-                                BREthereumAmount amount) {
+                                BREthereumAmount amount,
+                                const char *data) {
     BREthereumWallet wallet = lightNodeLookupWallet(node, wid);
-    return lightNodeWalletCreateTransaction(node, wallet, recvAddress, amount);
+    return lightNodeWalletCreateTransaction(node, wallet, recvAddress, amount, data);
 }
 
 extern void // status, error

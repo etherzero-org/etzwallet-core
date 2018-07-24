@@ -115,7 +115,9 @@ extern BREthereumTransaction
 walletCreateTransaction(BREthereumWallet wallet,
                         BREthereumAddress recvAddress,
                         BREthereumAmount amount,
-                        const char *data);
+                        const char *data,
+                        const char *gaslimit,
+                        const char *gasprice);
 
 /**
  *
@@ -143,7 +145,9 @@ walletCreateTransactionDetailed(BREthereumWallet wallet,
                                 BREthereumGasPrice gasPrice,
                                 BREthereumGas gasLimit,
                                 uint64_t nonce,
-                                const char *data);
+                                const char *data,
+                                const char *gaslimit,
+                                const char *gasprice);
 
 extern void
 walletSignTransaction(BREthereumWallet wallet,

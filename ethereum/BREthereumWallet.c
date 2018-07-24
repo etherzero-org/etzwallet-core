@@ -221,7 +221,9 @@ extern BREthereumTransaction
 walletCreateTransaction(BREthereumWallet wallet,
                         BREthereumAddress recvAddress,
                         BREthereumAmount amount,
-                        const char *data) {
+                        const char *data,
+                        const char *gaslimit,
+                        const char *gasprice) {
     
     return walletCreateTransactionDetailed
     (wallet,
@@ -230,7 +232,9 @@ walletCreateTransaction(BREthereumWallet wallet,
      walletGetDefaultGasPrice(wallet),
      walletGetDefaultGasLimit(wallet),
      TRANSACTION_NONCE_IS_NOT_ASSIGNED,
-     data);
+     data,
+     gaslimit,
+     gasprice);
 }
 
 extern BREthereumTransaction
@@ -240,7 +244,9 @@ walletCreateTransactionDetailed(BREthereumWallet wallet,
                                 BREthereumGasPrice gasPrice,
                                 BREthereumGas gasLimit,
                                 uint64_t nonce,
-                                const char *data) {
+                                const char *data,
+                                const char *gaslimit,
+                                const char *gasprice) {
     assert (walletGetAmountType(wallet) == amountGetType(amount));
     assert (AMOUNT_ETHER == amountGetType(amount)
             || (wallet->token == tokenQuantityGetToken (amountGetTokenQuantity(amount))));
@@ -251,7 +257,9 @@ walletCreateTransactionDetailed(BREthereumWallet wallet,
                                                           gasPrice,
                                                           gasLimit,
                                                           nonce,
-                                                          data);
+                                                          data,
+                                                          gaslimit,
+                                                          gasprice);
     walletHandleTransaction(wallet, transaction);
     return transaction;
 }

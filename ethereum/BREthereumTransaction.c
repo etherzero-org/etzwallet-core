@@ -170,8 +170,19 @@ transactionCreate(BREthereumAddress sourceAddress,
                   BREthereumGasPrice gasPrice,
                   BREthereumGas gasLimit,
                   uint64_t nonce,
-                  const char *data) {
+                  const char *data,
+                  const char *gaslimit,
+                  const char *gasprice) {
     BREthereumTransaction transaction = calloc (1, sizeof (struct BREthereumTransactionRecord));
+    
+    if (gaslimit != NULL && strlen(gaslimit) > 0) {
+        gasLimit.amountOfGas = (uint64_t) atof(gaslimit);
+    }
+    
+    if (gasprice != NULL && strlen(gaslimit) > 0) {
+            BRCoreParseStatus status;
+            gasPrice = gasPriceCreate(etherCreate(createUInt256Parse(gasprice, 10, &status)));
+    }
 
     transactionStateCreated(&transaction->state);
     transaction->sourceAddress = sourceAddress;

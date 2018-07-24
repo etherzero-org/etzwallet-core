@@ -182,9 +182,11 @@ ethereumWalletCreateTransaction(BREthereumLightNode node,
                                 BREthereumWalletId wid,
                                 const char *recvAddress,
                                 BREthereumAmount amount,
-                                const char *data) {
+                                const char *data,
+                                const char *gaslimit,
+                                const char *gasprice) {
     BREthereumWallet wallet = lightNodeLookupWallet(node, wid);
-    return lightNodeWalletCreateTransaction(node, wallet, recvAddress, amount, data);
+    return lightNodeWalletCreateTransaction(node, wallet, recvAddress, amount, data, gaslimit, gasprice);
 }
 
 extern void // status, error

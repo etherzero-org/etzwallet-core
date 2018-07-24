@@ -339,14 +339,16 @@ lightNodeWalletCreateTransaction(BREthereumLightNode node,
                                  BREthereumWallet wallet,
                                  const char *recvAddress,
                                  BREthereumAmount amount,
-                                 const char *data) {
+                                 const char *data,
+                                 const char *gaslimit,
+                                 const char *gasprice) {
     BREthereumTransactionId tid = -1;
     BREthereumWalletId wid = -1;
 
     pthread_mutex_lock(&node->lock);
 
     BREthereumTransaction transaction =
-      walletCreateTransaction(wallet, createAddress(recvAddress), amount, data);
+      walletCreateTransaction(wallet, createAddress(recvAddress), amount, data, gaslimit, gasprice);
 
     tid = lightNodeInsertTransaction(node, transaction);
     wid = lightNodeLookupWalletId(node, wallet);

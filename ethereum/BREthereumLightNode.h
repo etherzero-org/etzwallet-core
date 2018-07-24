@@ -103,7 +103,9 @@ lightNodeWalletCreateTransaction(BREthereumLightNode node,
                                 BREthereumWallet wallet,
                                 const char *recvAddress,
                                 BREthereumAmount amount,
-                                const char *data);
+                                const char *data,
+                                const char *gaslimit,
+                                const char *gasprice);
 
 extern void // status, error
 lightNodeWalletSignTransaction(BREthereumLightNode node,

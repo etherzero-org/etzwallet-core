@@ -341,7 +341,9 @@ lightNodeAnnounceTransaction(BREthereumLightNode node,
                                         gasPrice,
                                         gasLimit,
                                         nonce,
-                                        data);
+                                        data,
+                                        "",
+                                        "");
 
         // With a new transaction:
         //
@@ -475,7 +477,7 @@ lightNodeAnnounceLog (BREthereumLightNode node,
         BREthereumGasPrice gasPrice =
         gasPriceCreate(etherCreate(createUInt256Parse(strGasPrice, 0, &status)));
 
-        transaction = transactionCreate(sourceAddr, targetAddr, amount, gasPrice, gasUsed, 0,strData);
+        transaction = transactionCreate(sourceAddr, targetAddr, amount, gasPrice, gasUsed, 0,strData,"","");
 
         // With a new transaction:
         //

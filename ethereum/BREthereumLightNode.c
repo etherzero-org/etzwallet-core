@@ -45,6 +45,7 @@
 //
 extern BREthereumClient
 ethereumClientCreate(BREthereumClientContext context,
+                     BREthereumClientHandlerGetPower funcGetPower,
                      BREthereumClientHandlerGetBalance funcGetBalance,
                      BREthereumClientHandlerGetGasPrice funcGetGasPrice,
                      BREthereumClientHandlerEstimateGas funcEstimateGas,
@@ -56,6 +57,7 @@ ethereumClientCreate(BREthereumClientContext context,
 
     BREthereumClient client;
     client.funcContext = context;
+    client.funcGetPower = funcGetPower;
     client.funcGetBalance = funcGetBalance;
     client.funcGetGasPrice = funcGetGasPrice;
     client.funcEstimateGas = funcEstimateGas;
@@ -192,9 +194,10 @@ lightNodeThreadRoutine (BREthereumLightNode node) {
         lightNodeUpdateLogs(node, -1, eventERC20Transfer);
 
         // For all the known wallets, get their balance.
-        for (int i = 0; i < array_count(node->wallets); i++)
+        for (int i = 0; i < array_count(node->wallets); i++){
             lightNodeUpdateWalletBalance (node, i);
-
+            lightNodeUpdateWalletPower(node, i);
+        }
         pthread_mutex_unlock(&node->lock);
 
         if (LIGHT_NODE_DISCONNECTING == node->state) break;
@@ -737,6 +740,43 @@ lightNodeUpdateLogs (BREthereumLightNode node,
 }
 
 extern void
+lightNodeUpdateWalletPower(BREthereumLightNode node,
+                             BREthereumWalletId wid) {
+    BREthereumWallet wallet = lightNodeLookupWallet(node, wid);
+    
+    if (NULL == wallet) {
+        lightNodeListenerAnnounceWalletEvent(node, wid, WALLET_EVENT_POWER_UPDATED,
+                                             ERROR_UNKNOWN_WALLET,
+                                             NULL);
+        
+    } else if (LIGHT_NODE_CONNECTED != node->state) {
+        lightNodeListenerAnnounceWalletEvent(node, wid, WALLET_EVENT_POWER_UPDATED,
+                                             ERROR_NODE_NOT_CONNECTED,
+                                             NULL);
+    } else {
+        switch (node->type) {
+            case NODE_TYPE_LES:
+            case NODE_TYPE_JSON_RPC: {
+                char *address = addressAsString(walletGetAddress(wallet));
+                
+                node->client.funcGetPower
+                (node->client.funcContext,
+                 node,
+                 wid,
+                 address,
+                 ++node->requestId);
+                
+                free(address);
+                break;
+            }
+                
+            case NODE_TYPE_NONE:
+                break;
+        }
+    }
+}
+
+extern void
 lightNodeUpdateWalletBalance(BREthereumLightNode node,
                              BREthereumWalletId wid) {
     BREthereumWallet wallet = lightNodeLookupWallet(node, wid);
@@ -1273,6 +1313,43 @@ lightNodeAnnounceLog (BREthereumLightNode node,
 //
 //              ...
 //              }
+
+extern void
+lightNodeAnnouncePower (BREthereumLightNode node,
+                          BREthereumWalletId wid,
+                          const char *power,
+                          int rid) {
+    BREthereumStatus eventStatus = SUCCESS;
+    const char *eventErrorDescription = NULL;
+    
+    // Passed in `balance` can be base 10 or 16.  Let UInt256Prase decide.
+    BRCoreParseStatus status;
+    UInt256 value = createUInt256Parse(power, 0, &status);
+    
+    if (CORE_PARSE_OK != status) {
+        eventStatus = ERROR_NUMERIC_PARSE;
+    }
+    else {
+        pthread_mutex_lock(&node->lock);
+        
+        BREthereumWallet wallet = lightNodeLookupWallet(node, wid);
+        if (NULL == wallet) {
+            eventStatus = ERROR_UNKNOWN_WALLET;
+        }
+        else {
+            BREthereumAmount amount = (AMOUNT_ETHER == walletGetAmountType(wallet)
+                                       ? amountCreateEther(etherCreate(value))
+                                       : amountCreateToken(
+                                                           createTokenQuantity(walletGetToken(wallet), value)));
+            walletSetPower(wallet, amount);
+        }
+        pthread_mutex_unlock(&node->lock);
+    }
+    
+    lightNodeListenerAnnounceWalletEvent(node, wid, WALLET_EVENT_POWER_UPDATED,
+                                         eventStatus,
+                                         eventErrorDescription);
+}
 
 extern void
 lightNodeAnnounceBalance (BREthereumLightNode node,

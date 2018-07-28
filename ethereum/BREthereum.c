@@ -139,6 +139,13 @@ ethereumWalletGetDefaultGasPrice(BREthereumLightNode node,
             : gasPrice.etherPerGas.valueInWEI.u64[0]);
 }
 
+extern BREthereumPower
+ethereumWalletGetPower(BREthereumLightNode node,
+                         BREthereumWalletId wid) {
+    BREthereumWallet wallet = lightNodeLookupWallet(node, wid);
+    return walletGetPower(wallet);
+}
+
 extern BREthereumAmount
 ethereumWalletGetBalance(BREthereumLightNode node,
                          BREthereumWalletId wid) {

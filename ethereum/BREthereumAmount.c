@@ -39,13 +39,6 @@ amountCreateEther (BREthereumEther ether) {
     amount.u.ether = ether;
     return amount;
 }
-extern BREthereumAmount
-amountCreateEther1 (BREthereumEther ether,char * data) {
-    BREthereumAmount amount;
-    amount.type = AMOUNT_ETHER;
-    amount.u.ether = ether;
-    return amount;
-}
 
 extern BREthereumAmount
 amountCreateToken (BREthereumTokenQuantity tokenQuantity) {

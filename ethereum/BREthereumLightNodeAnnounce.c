@@ -73,6 +73,37 @@ lightNodeAnnounceBalance (BREthereumLightNode node,
 }
 
 extern void
+lightNodeAnnouncePower (BREthereumLightNode node,
+                          BREthereumWalletId wid,
+                          const char *power,
+                          int rid) {
+    BREthereumStatus eventStatus = SUCCESS;
+    const char *eventErrorDescription = NULL;
+    
+    // Passed in `balance` can be base 10 or 16.  Let UInt256Prase decide.
+//    BRCoreParseStatus status;
+    double value = atof(power);
+    
+
+        pthread_mutex_lock(&node->lock);
+        
+        BREthereumWallet wallet = lightNodeLookupWallet(node, wid);
+        if (NULL == wallet) {
+            eventStatus = ERROR_UNKNOWN_WALLET;
+        }
+        else {
+            BREthereumPower amount = PowerCreate(value);
+            walletSetPower(wallet, amount);
+        }
+        pthread_mutex_unlock(&node->lock);
+
+    
+    lightNodeListenerAnnounceWalletEvent(node, wid, WALLET_EVENT_POWER_UPDATED,
+                                         eventStatus,
+                                         eventErrorDescription);
+}
+
+extern void
 lightNodeAnnounceGasPrice(BREthereumLightNode node,
                           BREthereumWalletId wid,
                           const char *gasPrice,

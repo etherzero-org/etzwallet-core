@@ -34,6 +34,7 @@
 #include "BREthereumGas.h"
 #include "BREthereumAmount.h"
 #include "BREthereumNetwork.h"
+#include "BREthereumPower.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -88,6 +89,7 @@ typedef enum {
 typedef enum {
     WALLET_EVENT_CREATED = 0,
     WALLET_EVENT_BALANCE_UPDATED,
+    WALLET_EVENT_POWER_UPDATED,
     WALLET_EVENT_DEFAULT_GAS_LIMIT_UPDATED,
     WALLET_EVENT_DEFAULT_GAS_PRICE_UPDATED,
     WALLET_EVENT_DELETED
@@ -162,6 +164,13 @@ typedef void (*BREthereumListenerTransactionEventHandler)(BREthereumListenerCont
                                           int rid);
     
     typedef void
+    (*BREthereumClientHandlerGetPower) (BREthereumClientContext context,
+                                          BREthereumLightNode node,
+                                          BREthereumWalletId wid,
+                                          const char *address,
+                                          int rid);
+    
+    typedef void
     (*BREthereumClientHandlerGetGasPrice) (BREthereumClientContext context,
                                            BREthereumLightNode node,
                                            BREthereumWalletId wid,
@@ -219,6 +228,7 @@ typedef void (*BREthereumListenerTransactionEventHandler)(BREthereumListenerCont
 //
 typedef struct {
     BREthereumClientContext funcContext;
+    BREthereumClientHandlerGetPower funcGetPower;
     BREthereumClientHandlerGetBalance funcGetBalance;
     BREthereumClientHandlerGetGasPrice funcGetGasPrice;
     BREthereumClientHandlerEstimateGas funcEstimateGas;
@@ -239,6 +249,7 @@ typedef struct {
  */
 extern BREthereumClient
 ethereumClientCreate(BREthereumClientContext context,
+                     BREthereumClientHandlerGetPower funcGetPower,
                      BREthereumClientHandlerGetBalance funcGetBalance,
                      BREthereumClientHandlerGetGasPrice functGetGasPrice,
                      BREthereumClientHandlerEstimateGas funcEstimateGas,
@@ -420,6 +431,10 @@ ethereumWalletSetDefaultGasPrice(BREthereumLightNode node,
 extern uint64_t
 ethereumWalletGetDefaultGasPrice(BREthereumLightNode node,
                                  BREthereumWalletId wid);
+    
+extern BREthereumPower
+ethereumWalletGetPower(BREthereumLightNode node,
+                         BREthereumWalletId wid);
 
 extern BREthereumAmount
 ethereumWalletGetBalance(BREthereumLightNode node,
@@ -662,6 +677,10 @@ lightNodeUpdateLogs (BREthereumLightNode node,
 //
 // Wallet Updates
 //
+
+extern void
+lightNodeUpdateWalletPower (BREthereumLightNode node,
+                              BREthereumWalletId wid);
 extern void
 lightNodeUpdateWalletBalance (BREthereumLightNode node,
                               BREthereumWalletId wid);
@@ -757,6 +776,12 @@ extern void
 lightNodeAnnounceBalance (BREthereumLightNode node,
                           BREthereumWalletId wid,
                           const char *balance,
+                          int rid);
+    
+extern void
+lightNodeAnnouncePower (BREthereumLightNode node,
+                          BREthereumWalletId wid,
+                          const char *power,
                           int rid);
 
 extern void

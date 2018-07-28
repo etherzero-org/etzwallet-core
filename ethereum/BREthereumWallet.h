@@ -32,6 +32,7 @@
 #include "BREthereumAccount.h"
 #include "BREthereumNetwork.h"
 #include "BREthereumTransaction.h"
+#include "BREthereumPower.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -198,6 +199,12 @@ walletGetAmountType (BREthereumWallet wallet);
  */
 extern BREthereumToken
 walletGetToken (BREthereumWallet wallet);
+    
+/**
+* The wallet's power
+*/
+extern BREthereumPower
+walletGetPower (BREthereumWallet wallet);
 
 /**
  * The wallet's balance

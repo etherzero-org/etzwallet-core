@@ -54,8 +54,6 @@ typedef struct BREthereumAmountRecord {
 } BREthereumAmount;
 
 extern BREthereumAmount
-amountCreateEther1 (BREthereumEther ether,char * data);
-extern BREthereumAmount
 amountCreateEther (BREthereumEther ether);
 
 // TODO: what is 'scale' - replace with 'decimals'?

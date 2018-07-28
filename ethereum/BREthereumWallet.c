@@ -27,6 +27,7 @@
 #include <string.h>
 #include <assert.h>
 #include "BREthereumPrivate.h"
+#include "BREthereumPower.h"
 #include "BRArray.h"
 
 #define DEFAULT_ETHER_GAS_PRICE_NUMBER   500000000 // 0.5 GWEI
@@ -91,6 +92,12 @@ struct BREthereumWalletRecord {
      * thus consuming unexpectedly large amounts of Ether.
      */
     BREthereumGas defaultGasLimit;
+    
+    
+    /**
+     * The wallet's power, ETHERZero
+     */
+    BREthereumPower power;
     
     /**
      * The wallet's balance, either ETHER or a TOKEN.
@@ -414,6 +421,19 @@ private_extern void
 walletSetBalance (BREthereumWallet wallet,
                   BREthereumAmount balance) {
     wallet->balance = balance;
+}
+
+// Power
+
+extern BREthereumPower
+walletGetPower (BREthereumWallet wallet) {
+    return wallet->power;
+}
+
+private_extern void
+walletSetPower (BREthereumWallet wallet,
+                  BREthereumPower power) {
+    wallet->power = power;
 }
 
 // Gas Limit

@@ -232,7 +232,7 @@ console.log (result)
 static struct BREthereumTokenRecord tokens[] = {
     {
         // BRD first... so we can find it.
-        "0x86d105d5fa67f3eef986f75b7e63c6664f88319a",
+        "0xfddb863dbff0632d57571a5af38482966e722ab4",
         "BO",
         "BlockOptions",
         "",

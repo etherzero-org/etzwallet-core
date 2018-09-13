@@ -299,6 +299,18 @@ static struct BREthereumTokenRecord tokens[] = {
         1
     },
     {
+        "0x290a82fd9c3b1d599faf3181739a17f6f8d4cff0",
+        "ABC",
+        "ABountifulCompany",
+        "",
+        18,
+        "#38c1d4",
+        "#38d4cb",
+        { TOKEN_BRD_DEFAULT_GAS_LIMIT },
+        { { { .u64 = {TOKEN_BRD_DEFAULT_GAS_PRICE_IN_WEI_UINT64, 0, 0, 0}}}},
+        1
+    },
+    {
         "0xf30d911f189c17635c3047538f98a1fedb8875ff",
         "SQB",
         "SQB",
@@ -310,7 +322,6 @@ static struct BREthereumTokenRecord tokens[] = {
         { { { .u64 = {TOKEN_BRD_DEFAULT_GAS_PRICE_IN_WEI_UINT64, 0, 0, 0}}}},
         1
     },
-
     {
         "0xAf30D2a7E90d7DC361c8C4585e9BB7D2F6f15bc7",
         "1ST",
